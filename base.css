@@ -1,0 +1,138 @@
+/* =============================================================
+   base.css  —  品質スカフォールド（デザイン中立）
+   -------------------------------------------------------------
+   これは「見た目」ではなく「作りの丁寧さ（品質の下限）」を共有する土台。
+   ・色やレイアウトはここでは決めない → 各プロジェクトで毎回設計する
+   ・ここに入っているのは：リセット / 色トークンの空枠 / アクセシビリティ /
+     コンテナ / レスポンシブ・グリッドの仕組み / フォームの作り込み だけ
+   使い方：このファイルを読み込み、下の「1. 色トークン」を毎回埋めてから、
+           プロジェクト専用の theme.css（カード・ヒーロー等の見た目）を別に書く。
+   ============================================================= */
+
+/* ===== 1. 色トークン（★毎回ここだけ変える。今は無彩色のプレースホルダ） ===== */
+:root {
+  /* ブランド色（TODO: このプロジェクトの色に変更する） */
+  --brand:        #444;      /* 主役の色（ボタン・見出し等） */
+  --brand-dark:   #222;      /* hover・濃いめ */
+  --brand-light:  #eee;      /* 淡い背景・フォーカスの輪郭 */
+  --accent-bg:    #f6f6f6;   /* 交互セクションの背景 */
+
+  /* 文字・罫線（通常はこのままでOK） */
+  --text:  #232323;
+  --muted: #6b6b6b;
+  --line:  #e3e3df;
+  --white: #fff;
+
+  /* レイアウト・共通値 */
+  --max:     1080px;   /* コンテンツ最大幅 */
+  --gap:     24px;     /* 標準の余白 */
+  --radius:  8px;      /* 角丸 */
+  --tap:     44px;     /* 指で押せる最小サイズ（アクセシビリティ） */
+  --font:    "Noto Sans JP", system-ui, sans-serif;
+}
+
+/* ===== 2. リセット・土台 ===== */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--text);
+  line-height: 1.8;
+  background: var(--white);
+}
+img, svg, video { max-width: 100%; height: auto; display: block; }
+a { color: var(--brand-dark); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3 { line-height: 1.4; }
+
+/* ===== 3. アクセシビリティ（“ちゃんと作った感”が出る所） ===== */
+/* キーボード操作時だけ見えるフォーカスの輪郭 */
+:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+/* 画面には出さず読み上げ用に残す（skipリンク等） */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+/* 本文へ飛ぶスキップリンク（Tabで最初に出る） */
+.skip-link {
+  position: absolute; left: 8px; top: -48px; z-index: 200;
+  background: var(--brand); color: #fff; padding: 10px 16px; border-radius: var(--radius);
+  transition: top .2s;
+}
+.skip-link:focus { top: 8px; text-decoration: none; }
+/* 動きを減らす設定の人にはアニメを止める */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* ===== 4. レイアウト部品（見た目ではなく“仕組み”） ===== */
+.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+.section  { padding: 72px 0; }
+.section--alt { background: var(--accent-bg); }
+
+/* 自動で列が折り返すグリッド（ブレイクポイント不要でスマホでも崩れない）
+   1枚の最小幅を --min で調整（既定 280px）。狭くなると自動で1列になる。 */
+.grid {
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min, 280px)), 1fr));
+}
+
+/* ===== 5. ボタン（色はトークン任せ・最低限の押しやすさだけ担保） ===== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: var(--tap); padding: 12px 26px;
+  border-radius: var(--radius); font-weight: 700;
+  background: var(--brand); color: #fff; border: 2px solid var(--brand);
+  cursor: pointer; transition: background .2s, color .2s;
+}
+.btn:hover { background: var(--brand-dark); border-color: var(--brand-dark); text-decoration: none; color: #fff; }
+.btn--outline { background: transparent; color: var(--brand-dark); }
+.btn--outline:hover { background: var(--brand); color: #fff; }
+
+/* ===== 6. フォーム（入力の作り込み＝フォーカスリング・押しやすさ） ===== */
+label { display: block; font-weight: 700; margin-bottom: 6px; }
+input, textarea, select {
+  width: 100%; min-height: var(--tap); padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  font: inherit; background: #fff;
+}
+textarea { min-height: 140px; }
+input:focus, textarea:focus, select:focus {
+  outline: none; border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-light);   /* ブランド色の淡い輪郭 */
+}
+
+/* ===== 7. ヘッダー＋ハンバーガー（“実際に動く”ナビの仕組み） ===== */
+/* 見た目は最小限。色はトークン。開閉の動作は app.js が担当。 */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.96); backdrop-filter: blur(4px);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 64px; }
+.nav ul { list-style: none; display: flex; gap: 24px; margin: 0; padding: 0; }
+.nav a { color: var(--text); font-weight: 500; }
+
+.menu-toggle {
+  display: none; width: var(--tap); height: var(--tap);
+  background: none; border: 0; padding: 10px; cursor: pointer;
+}
+.menu-toggle span { display: block; height: 2px; background: var(--text); margin: 5px 0; transition: .3s; }
+.menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 1024px) {
+  .menu-toggle { display: block; }
+  .nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: #fff; border-bottom: 1px solid var(--line);
+    max-height: 0; overflow: hidden; transition: max-height .3s;
+  }
+  .nav.is-open { max-height: 80vh; overflow-y: auto; }
+  .nav ul { flex-direction: column; gap: 0; }
+  .nav li + li { border-top: 1px solid var(--line); }
+  .nav a { display: block; padding: 16px 20px; }
+}

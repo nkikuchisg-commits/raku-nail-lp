@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>raku nail — OGP banner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@500;700&family=Outfit:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --brand:#5c718a; --dark:#2d3742; --greige:#a4937c; --text:#3b434d; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    font-family: "Zen Kaku Gothic Antique","Noto Sans JP",sans-serif; color: var(--text);
+    background:
+      radial-gradient(58% 78% at 88% 4%, #dde4ec 0%, transparent 56%),
+      radial-gradient(54% 66% at 4% 100%, #ece5da 0%, transparent 52%),
+      linear-gradient(160deg, #fafbfc 0%, #f0f2f2 100%);
+    display: flex; align-items: center; position: relative; overflow: hidden;
+  }
+  .frame { position: absolute; inset: 30px; border: 2px dashed rgba(92,113,138,.3); border-radius: 26px; }
+  .inner { position: relative; padding: 0 84px; max-width: 780px; }
+  .en { font-family:"Outfit",sans-serif; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--greige); font-size:28px; margin-bottom:14px; }
+  h1 { font-family:"Zen Kaku Gothic Antique",sans-serif; font-weight:700; color:var(--dark); font-size:68px; letter-spacing:.02em; line-height:1.34; margin-bottom:22px; }
+  h1 b { color: var(--brand); }
+  .rule { width: 92px; height: 5px; border-radius: 6px; background: linear-gradient(90deg, var(--greige), var(--brand)); margin-bottom: 22px; }
+  .tag { font-size: 29px; color: #454d57; font-weight: 500; margin-bottom: 12px; font-family:"Noto Sans JP",sans-serif; }
+  .area { font-size: 24px; color: var(--brand); letter-spacing: .04em; font-weight: 700; font-family:"Noto Sans JP",sans-serif; }
+  .orb {
+    position: absolute; right: 112px; top: 50%; transform: translateY(-50%);
+    width: 290px; height: 290px; border-radius: 50%;
+    background:
+      radial-gradient(circle at 36% 28%, #eef1f5 0 20%, transparent 21%),
+      radial-gradient(circle at 62% 70%, #566d87 0 42%, transparent 43%),
+      conic-gradient(from 210deg, #62778f, #8494a9, #4f6280, #4f647d, #62778f);
+    box-shadow: inset 0 -10px 24px rgba(30,42,56,.4), inset 0 12px 22px rgba(238,241,245,.6), 0 16px 34px rgba(69,86,107,.26);
+  }
+  .orb::after { content:""; position:absolute; left:24%; top:16%; width:34%; height:50%; border-radius:50%; background: linear-gradient(150deg, rgba(255,255,255,.9), rgba(255,255,255,0)); filter: blur(2px); }
+  .badge { position: absolute; right: 54px; bottom: 50px; background: var(--dark); color: #fff; font-size: 19px; letter-spacing: .08em; font-weight: 500; padding: 9px 20px; border-radius: 999px; font-family:"Noto Sans JP",sans-serif; }
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="inner">
+    <div class="en">Nail Salon — Urawa</div>
+    <h1>透明感のある指先を、<br><b>わたしのペース</b>で。</h1>
+    <div class="rule"></div>
+    <div class="tag">大人のニュアンスネイル × 自爪ケア</div>
+    <div class="area">さいたま・浦和／raku nail</div>
+  </div>
+  <div class="orb" aria-hidden="true"></div>
+  <div class="badge">ホームページ提案サンプル</div>
+</body>
+</html>

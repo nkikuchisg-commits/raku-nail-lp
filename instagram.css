@@ -1,0 +1,33 @@
+/* =============================================================
+   instagram.css — Instagram連携セクションの土台（デザイン中立）
+   -------------------------------------------------------------
+   「作り」だけを用意する。色や装飾は base.css のトークン任せ。
+   ① 導線ボタン（.ig-actions）… プロフィール/DM へ飛ばす（必須）
+   ② 投稿の埋め込み（.ig-embeds）… 公式 embed を並べる（任意）
+   ③ 最新投稿の“自動”表示は別オプション（starter.html のコメント参照）
+   ============================================================= */
+
+/* ① 導線ボタン ------------------------------------------------ */
+.ig-actions {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 20px;
+}
+/* ボタン内の Instagram グリフ（色はボタン文字色に追従） */
+.ig-icon { width: 20px; height: 20px; margin-right: 8px; fill: currentColor; flex: none; }
+
+/* ② 投稿の埋め込み ------------------------------------------- */
+/* 複数貼ったら中央寄せで折り返す。embed.js 適用後の iframe にも効く。 */
+.ig-embeds {
+  display: flex; flex-wrap: wrap; gap: var(--gap);
+  justify-content: center; align-items: flex-start;  /* 各投稿は上揃え＝高さが違っても崩れない */
+  margin-top: 32px;
+}
+/* Instagram 既定の余白・最小幅を打ち消して枠に収める */
+.ig-embeds .instagram-media {
+  margin: 0 !important;
+  min-width: 0 !important;
+  width: 100%; max-width: 328px;
+}
+
+/* ③ 自動フィードを入れた場合の枠（任意・受注店のみ） --------- */
+.ig-feed { margin-top: 32px; }
